@@ -244,7 +244,7 @@ static ngx_int_t es_respond_message(subscriber_t *sub,  nchan_msg_t *msg) {
   return nchan_output_msg_filter(fsub->sub.request, msg, first_link);
 }
 
-static void empty_handler(void) {}
+static void empty_handler(void *d) {}
 
 static ngx_int_t es_respond_status(subscriber_t *sub, ngx_int_t status_code, const ngx_str_t *status_line,  ngx_chain_t *status_body){
   
