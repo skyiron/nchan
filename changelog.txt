@@ -1,3 +1,6 @@
+1.3.8 (Feb. 14 2026)
+ fix: Compilation with GCC 15.1.1 failed due to stricter pointer mismatch rules
+ fix: Redis connection issue with username (Thanks, GrayHoax)
 1.3.7 (Sep. 19 2024)
  fix: repeated DELETE requests can leave unresponsive subscribers connected to a channel
  fix: channel info subscriber count incorrect when using Redis following unclean worker exit
