@@ -56,6 +56,19 @@ static ngx_connection_t *nchan_create_fake_connection(ngx_pool_t *pool) {
 
   c->error = 0;
 
+  /* FIX: Initialize sockaddr for fake connection to prevent segfault 
+     when ngx_http_realip_module accesses it. */
+  c->sockaddr = ngx_pcalloc(c->pool, sizeof(struct sockaddr_in));
+  if (c->sockaddr) {
+      struct sockaddr_in *sin = (struct sockaddr_in*) c->sockaddr;
+      sin->sin_family = AF_INET;
+      sin->sin_addr.s_addr = htonl(INADDR_LOOPBACK);
+      c->socklen = sizeof(struct sockaddr_in);
+  } else {
+      ngx_log_error(NGX_LOG_ALERT, c->log, 0,
+                    "nchan: failed to allocate sockaddr for fake connection");
+  }
+
   return c;
 
 failed:
